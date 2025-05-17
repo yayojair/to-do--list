@@ -1,0 +1,174 @@
+body{
+    background: #000;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+}
+
+#contenedor{
+    width: 800px;
+    height: 500px;
+    background-color: aliceblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    box-shadow: 0 0 20px 20px  #26771c;
+    overflow: hidden;
+    margin: 0;
+    position: relative;
+}
+
+#crear_tarea {
+    display: flex;
+    flex-direction: column; /* Para que se apilen verticalmente */
+    align-items: center;     /* Centra horizontalmente los hijos */
+    justify-content: center; /* Centra verticalmente si le das altura al contenedor */
+    gap: 1rem;                /* Espacio entre elementos */
+    height: 100vh;            /* Opcional: altura de pantalla completa */
+    z-index: 10;
+
+}
+
+#tarea{
+    width: 290px;
+    height: 100px;
+    border-radius: 10px;
+    resize: none;
+    bottom: 50px;
+    font-size: x-large;
+    z-index: 10;
+}
+
+#crear{
+    width: 75px;
+    height: 35px;
+    border-radius: 10px;
+    bottom: 5px;
+    background: #92eb86;
+    z-index: 10;
+}
+
+
+
+#titulo_tarea{
+    font-family:cursive;
+    color: #557451;
+    z-index: 10;
+    font-family: serif;
+}
+
+
+#listar_tareas{
+    width: 300px;
+    height: 420px;
+    position: relative;
+    right: -10%;
+    z-index: 10;
+
+}
+
+#titulo_lista{
+    text-align: center;
+    position: relative;
+    top: -15px;
+    font-family: cursive;
+    z-index: 10;
+    color: #557451;
+    font-family: serif;
+}
+
+ul {
+    width: 300px;
+    height: 325px;
+    position: relative;
+    top: -20px;
+    padding: 0;
+    margin: 0;
+    overflow: auto;
+    z-index: 10;
+}
+
+
+/*etiquetas creadas desde js*/
+
+#guardar{
+    width: 75px;
+    height: 35px;
+    border-radius: 10px;
+    bottom: 5px;
+    background: #92eb86;
+    z-index: 10;
+    position: relative;
+    left: 50px;
+}
+
+#limpiar{
+    width: 75px;
+    height: 35px;
+    border-radius: 10px;
+    background: #92eb86;
+    z-index: 10;
+    position: relative;
+    bottom: 13px;
+    left: 80px;
+}
+
+li {
+    display: flex;          /* Activa flexbox */
+    justify-content: center; /* o center */
+    align-items: center; /* si quieres centrar verticalmente */
+    gap: 10px;             /* Espacio entre el div y el botón */
+    padding-bottom: 5px;
+}
+
+
+#espacio-tarea {
+    flex-grow: 1;
+    height: 30px;
+    background: #ffffff;
+    overflow: hidden;
+    resize:none;
+    cursor: default;
+}
+
+.eliminar {
+    background: #9ade8f;
+    color: white;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+
+}
+
+.mostrar{
+    border-radius: 10px;
+    bottom: 5px;
+    background: #92eb86;
+
+}
+
+
+/*efecto burbuja*/
+.bubble{
+    position: absolute;
+    border-radius: 50%;
+    background: rgba(139, 183, 196, 0.895);
+    box-shadow: 0 0 10px rgba(173 216, 230, 0.4);
+    animation: floatup linear;
+    z-index: 1;
+}
+
+@keyframes floatup{
+    0%{
+        transform: translateY(0);
+        opacity: 1;
+    }
+    100%{
+        transform: translateY(-900vh);
+        opacity: 0;
+    }
+}

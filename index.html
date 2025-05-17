@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+</head>
+<body>
+    <div id="contenedor">
+        <div id="crear_tarea">
+            <h1 id="titulo_tarea">Crea tu tarea</h1>
+            <textarea id="tarea" placeholder="Escribe tus tareas..."></textarea>
+            <button onclick="crear_tarea()" id="crear"> Crear</button>
+        </div>
+
+        <div id="listar_tareas">
+            <h1 id="titulo_lista"> Tareas a realizar</h1>
+            <ul id="mostrar_tareas"></ul>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
