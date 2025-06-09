@@ -152,23 +152,23 @@ li {
 }
 
 
-/*efecto burbuja*/
-.bubble{
+.bubble {
     position: absolute;
     border-radius: 50%;
-    background: rgba(139, 183, 196, 0.895);
-    box-shadow: 0 0 10px rgba(173 216, 230, 0.4);
+    background: rgba(139, 183, 196, 0.895); /* Color burbuja */
+    box-shadow: 0 0 10px rgba(173, 216, 230, 0.4); /* Brillo */
     animation: floatup linear;
     z-index: 1;
 }
 
-@keyframes floatup{
-    0%{
+
+@keyframes floatup {
+    0% {
         transform: translateY(0);
         opacity: 1;
     }
-    100%{
-        transform: translateY(-900vh);
-        opacity: 0;
+    100% {
+        transform: translateY(-900vh);      /* Suben muy alto fuera de pantalla */
+        opacity: 0;                         /* Se desvanecen */
     }
 }

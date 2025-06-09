@@ -1,134 +1,168 @@
+/**
+ * Autor: Edgar Jair  Martinez Ruiz
+ * Proyecto: Lista de tareas
+ * Descripción: crear y  almacenar listas de tareas.
+ */
+
+// Identificador único para cada tarea
 let id_tareas = 0;
+
+// Arreglo para almacenar las tareas
 let arr_tareas = [];
 
-
-function desplegarStorage(){
+/**
+ * Recupera las tareas almacenadas en localStorage y las muestra en pantalla
+ */
+function desplegarStorage() {
     arr_tareas = JSON.parse(localStorage.getItem("tareas") || "[]");
-    for (let i = 0; i<arr_tareas.length; i++){
+    for (let i = 0; i < arr_tareas.length; i++) {
         crear_tarea(arr_tareas[i]);
     }
 }
 
-
-function guardaStorage(){
+/**
+ * Guarda el arreglo de tareas actual en localStorage
+ */
+function guardaStorage() {
     localStorage.setItem("tareas", JSON.stringify(arr_tareas));
-}  
+}
 
-
-function crear_tarea(paramtarea="") {
+/**
+ * Crea una nueva tarea y la agrega al DOM y al almacenamiento si es nueva
+ * @param {string} paramtarea - Texto de la tarea (puede venir de localStorage)
+ */
+function crear_tarea(paramtarea = "") {
     let tarea = "";
     let nueva = false;
-    if (paramtarea != ""){
+
+    if (paramtarea !== "") {
         tarea = paramtarea;
-    }else{
+    } else {
         nueva = true;
         const inputTarea = document.getElementById("tarea");
         tarea = inputTarea.value.trim();
         inputTarea.style.height = "100px";
+
+        // Validación: no permitir tareas vacías
         if (tarea === "") {
             alert("¡El input está vacío! Escribe algo.");
-            inputTarea.focus(); // Enfoca el input para que el usuario pueda escribir inmediatamente
-            return; // Sale de la función temprano
+            inputTarea.focus();
+            return;
         }
+
         inputTarea.value = "";
-        inputTarea.focus(); // Vuelve a enfocar el input para la siguiente tarea
+        inputTarea.focus();
     }
-    
+
     const contenedorTareas = document.getElementById("mostrar_tareas");
     const nuevaTarea = document.createElement('li');
     nuevaTarea.id = `${id_tareas}`;
+
     arr_tareas[id_tareas] = tarea;
-    id_tareas ++;
-    
-    // Mejor estructura para la tarea (puedes personalizar)
+    id_tareas++;
+
+    // Estructura HTML de cada tarea (texto, botón mostrar, botón eliminar)
     nuevaTarea.innerHTML = `
         <textarea readonly id="espacio-tarea">${tarea}</textarea>
         <button class="mostrar">show</button>
         <button class="eliminar">×</button>
     `;
-    
+
     contenedorTareas.appendChild(nuevaTarea);
-    
-    if(nueva){
+
+    if (nueva) {
         guardaStorage();
     }
-    
-    // Agregar evento para eliminar tarea (opcional)
-    nuevaTarea.querySelector('.eliminar').addEventListener('click', function() {
+
+    // Evento para eliminar una tarea
+    nuevaTarea.querySelector('.eliminar').addEventListener('click', function () {
         const id = parseInt(nuevaTarea.id);
-        arr_tareas.splice(id,1);
+        arr_tareas.splice(id, 1);
         nuevaTarea.remove();
         guardaStorage();
-        id_tareas --;
-        if(id_tareas == 0){
+        id_tareas--;
+
+        // Limpia todo el almacenamiento si no quedan tareas
+        if (id_tareas === 0) {
             localStorage.clear();
         }
-    
     });
 
-    nuevaTarea.querySelector('.mostrar').addEventListener('click', function(){
+    // Evento para alternar el tamaño del textarea (mostrar o reducir)
+    nuevaTarea.querySelector('.mostrar').addEventListener('click', function () {
         const reducir = nuevaTarea.querySelector('.mostrar');
         const abre_tarea = nuevaTarea.querySelector('#espacio-tarea');
-        if(reducir.textContent === "reducir"){
+
+        if (reducir.textContent === "reducir") {
             reducir.textContent = "show";
             abre_tarea.style.position = "";
             abre_tarea.style.width = '';
             abre_tarea.style.height = '';
             abre_tarea.style.overflowY = "";
-        }else{
+        } else {
             reducir.textContent = "reducir";
             abre_tarea.style.position = "relative";
             abre_tarea.style.height = 'auto';
-            if(abre_tarea.scrollHeight >= 150){
+
+            // Limita la altura si es muy grande
+            if (abre_tarea.scrollHeight >= 150) {
                 abre_tarea.style.height = "150px";
                 abre_tarea.style.overflowY = "auto";
-            }else{
+            } else {
                 abre_tarea.style.height = abre_tarea.scrollHeight + 'px';
             }
-            
         }
     });
 }
 
+// Referencia al textarea para escribir tareas
 const scalarTarea = document.getElementById('tarea');
-scalarTarea.addEventListener('input', function (){
-    
-    // Reinicia la altura primero
-    this.style.height = 'auto';
 
-    // Ajusta la altura al contenido actual
-    this.style.height = this.scrollHeight + 'px';
+// Evento que ajusta dinámicamente la altura del textarea
+scalarTarea?.addEventListener('input', function () {
+    this.style.height = 'auto'; // Reinicia altura
+    this.style.height = this.scrollHeight + 'px'; // Ajusta a contenido
 
-    // Si alcanzó una altura máxima (ej. 300px), puedes controlar el overflow
+    // Controla el scroll si la altura es excesiva
     if (this.scrollHeight >= 300) {
-        this.style.overflowY = 'auto';  // Muestra scroll si ya está muy grande
-        this.style.height = '300px';    // Limita la altura
+        this.style.overflowY = 'auto';
+        this.style.height = '300px';
     } else {
-        this.style.overflowY = 'hidden'; // Sin scroll si es pequeño
+        this.style.overflowY = 'hidden';
     }
-    
-})
+});
 
-function creatBubble(){
+/**
+ * Crea una burbuja animada que sube por la pantalla (efecto visual)
+ */
+function creatBubble() {
     const bubble = document.createElement("div");
     bubble.classList.add('bubble');
-    const size = Math.random()*20+10;
+
+    // Tamaño aleatorio entre 10px y 30px
+    const size = Math.random() * 20 + 10;
     bubble.style.width = `${size}px`;
     bubble.style.height = `${size}px`;
+
     const contenedor = document.getElementById('contenedor');
-    const contenedorWidth  = contenedor.offsetWidth;
-    bubble.style.left = `${Math.random()*contenedorWidth}px`;
+    const contenedorWidth = contenedor.offsetWidth;
+
+    bubble.style.left = `${Math.random() * contenedorWidth}px`;
     bubble.style.bottom = '0';
-    bubble.style.animationDuration = `${40 + Math.random()*10}s`;
+
+    // Duración de la animación aleatoria (40-50s)
+    bubble.style.animationDuration = `${40 + Math.random() * 10}s`;
+
     contenedor.appendChild(bubble);
-    setTimeout(() =>{
+
+    // Elimina la burbuja después de un tiempo
+    setTimeout(() => {
         bubble.remove();
     }, Math.random() * (3000 - 2800) + 2800);
 }
 
+// Genera una burbuja cada 200 ms
 setInterval(creatBubble, 200);
 
+// Al cargar la página, muestra las tareas almacenadas
 desplegarStorage();
-
-
-
